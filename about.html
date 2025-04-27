@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About | Vidyut</title>
+  <link rel="stylesheet" href="about2.css"/>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <header>
+    <div class="logo">logo </div>
+    <nav>
+      <ul class="navbar">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Feedback</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Arohan 2025</h1>
+      <p>A 3-day festival of innovation, adrenaline, and unforgettable memories.</p>
+      <button onclick="scrollToContent()">Explore More ↓</button>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="about-section" id="about-content">
+    <h2>About the Event</h2>
+    <p>Vidyut is a power-packed 3-day fest featuring roaring autoshows, electrifying proshows, mind-bending tech events, and vibrant non-tech activities — there's something for every enthusiast.</p>
+
+    <div class="image-block">
+      <img src="autoshow.jpg" alt="Autoshows"/>
+      <img src="concert.jpg" alt="Concert"/>
+      <img src="tech1.jpg" alt="techevents"/>
+      <img src="nontech.png" alt="non-techevents"/>
+    </div>
+  </section>
+
+  <!-- HIGHLIGHTS -->
+  <section class="highlights">
+    <div class="highlight-box">
+      <h3>🎯 This Year's Theme</h3>
+      <p><bold style="color: #ff4081;font-size: 20px;">“Ignite the Future”</bold> – where tech meets talent and passion meets purpose.</p>
+    </div>
+    <div class="highlight-box">
+      <h3>🚀 What to Expect</h3>
+      <ul>
+        <li>🚗 Autoshows – Custom rides & raw engine power.</li>
+        <li>🎤 Proshows – Star-studded music nights.</li>
+        <li>💻 Tech Events – Hackathons, bots & codes.</li>
+        <li>🎭 Non-Tech – Art battles, treasure hunts, open mics.</li>
+      </ul>
+    </div>
+  </section>
+
+ 
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Ready to Dive In?</h2>
+    <p>Join us for a thrilling ride. Discover the full schedule and register today!</p>
+    <button onclick="scrollToTop()">⬆ Back to Top</button>
+  </section>
+
+  <script>
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function scrollToContent() {
+      document.getElementById("about-content").scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
+
