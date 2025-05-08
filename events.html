@@ -1,271 +1,482 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Events | Vidyut Multi Fest</title>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #111;
-      color: #fff;
-      overflow-x: hidden;
-    }
-    h1 {
-      text-align: center;
-      padding: 20px;
-      color: #ff4081;
-    }
-    h2 {
-      margin: 40px 20px 10px;
-      font-size: 2rem;
-      color: #ff4081;
-    }
-    .event-section {
-      margin-bottom: 50px;
-      position: relative;
-    }
-    .event-carousel {
-      display: flex;
-      overflow-x: auto;
-      margin: 20px 30px;
-      gap: 20px;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-    }
-    .event-carousel::-webkit-scrollbar {
-      display: none;
-    }
-    .event-card {
-      flex: 0 0 auto;
-      width: 250px;
-      background: #1c1c1c;
-      border: 2px solid #ff4081;
-      border-radius: 12px;
-      padding: 0;
-      box-shadow: 0 0 15px rgba(255, 64, 129, 0.4);
-      overflow: hidden;
-      transition: transform 0.3s;
-      text-align: center;
-    }
-    .event-card:hover {
-      transform: scale(1.05);
-    }
-    .event-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-    }
-    .event-card h3 {
-      margin: 10px auto;
-      color: #fff;
-      font-size: 1.2rem;
-    }
-    .event-card button {
-      margin: 10px auto 20px;
-      padding: 10px 16px;
-      background: linear-gradient(90deg, #ff4081, #ff7096);
-      color: white;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s;
-      display: block;
-    }
-    .event-card button:hover {
-      background: linear-gradient(90deg, #e73370, #ff4081);
-    }
-    .scroll-button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 64, 129, 0.8);
-      border: none;
-      color: #fff;
-      padding: 12px;
-      cursor: pointer;
-      z-index: 1;
-      font-size: 1.2rem;
-      border-radius: 50%;
-      transition: background 0.3s, opacity 0.3s;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .event-section:hover .scroll-button {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .scroll-button:hover {
-      background: #ff7096;
-    }
-    .scroll-left {
-      left: 5px;
-    }
-    .scroll-right {
-      right: 5px;
-    }
-    .search-filter {
-      text-align: center;
-      margin: 20px;
-    }
-    .search-filter input {
-      padding: 10px;
-      width: 250px;
-      border-radius: 25px;
-      border: 1px solid #ff4081;
-      background: #222;
-      color: #fff;
-      outline: none;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vidyut Multi Fest Events</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --primary: #ff4081;
+            --text-color: #ffffff;
+            --scroll-btn-bg: rgba(0, 0, 0, 0.6);
+            --scroll-btn-hover: rgba(238, 73, 120, 0.8);
+            --nav-bg: #1a1a1a;
+            --nav-hover: #2a2a2a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 0;
+        }
+
+        /* Navigation Styles */
+        header {
+            background-color: var(--nav-bg);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .navbar {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .navbar a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .navbar a:hover {
+            background-color: var(--nav-hover);
+            color: var(--primary);
+        }
+
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .navbar a:hover::after {
+            width: 100%;
+        }
+
+        /* Main content container */
+        .main-content {
+            padding: 2rem;
+        }
+
+        h2 {
+            margin: 2rem 0 1rem;
+            font-size: 1.8rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .search-container input {
+            width: 90%;
+            max-width: 600px;
+            padding: 0.8rem 1rem 0.8rem 2rem;
+            border-radius: 8px;
+            border: 1px solid #333;
+            font-size: 1rem;
+            outline: none;
+            background-color: #1e1e1e;
+            color: var(--text-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .search-container input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+            background-color: #262626;
+        }
+
+        .search-container input::placeholder {
+            color: #aaa;
+        }
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .scroll-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Scrollable Carousel */
+        .carousel-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 1rem;
+            scrollbar-width: none;
+        }
+
+        /* Hides scrollbar in Chrome, Edge, Safari */
+        .carousel-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .carousel-container::-webkit-scrollbar-thumb {
+            background-color: var(--primary);
+            border-radius: 4px;
+        }
+
+        .carousel-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        /* Event Card */
+        .event-card {
+            flex: 0 0 auto;
+            width: 250px;
+            margin-right: 1rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            transition: transform 0.2s;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .event-card:hover {
+            transform: scale(1.05);
+        }
+
+        .event-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .event-title {
+            padding: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        /* Scroll Buttons */
+        .scroll-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--scroll-btn-bg);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease, background-color 0.3s ease;
+            z-index: 2;
+        }
+
+        .scroll-wrapper:hover .scroll-btn {
+            opacity: 1;
+        }
+
+        .scroll-btn:hover {
+            background-color: var(--scroll-btn-hover);
+        }
+
+        .scroll-btn.left {
+            left: 0.5rem;
+        }
+
+        .scroll-btn.right {
+            right: 0.5rem;
+        }
+    </style>
 </head>
+
 <body>
-  <h1>Vidyut Multi Fest - Events</h1>
-  <div class="search-filter">
-    <input type="text" id="searchBar" placeholder="Search events..." oninput="filterEvents()">
-  </div>
+    <!-- NAVIGATION -->
+    <header>
+        <div class="logo">LOGO</div>
+        <nav>
+            <ul class="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="#">Feedback</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <div class="event-section">
-    <h2 data-aos="flip-up">Technical Events</h2>
-    <button class="scroll-button scroll-left" onclick="scrollCarousel('technical', 'left')">&#9664;</button>
-    <button class="scroll-button scroll-right" onclick="scrollCarousel('technical', 'right')">&#9654;</button>
-    <div class="event-carousel" id="technical"></div>
-  </div>
+    <div class="main-content">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search for events..." />
+        </div>
 
-  <div class="event-section">
-    <h2 data-aos="flip-up">Non-Technical Events</h2>
-    <button class="scroll-button scroll-left" onclick="scrollCarousel('nontech', 'left')">&#9664;</button>
-    <button class="scroll-button scroll-right" onclick="scrollCarousel('nontech', 'right')">&#9654;</button>
-    <div class="event-carousel" id="nontech"></div>
-  </div>
+        <!-- Technical Events Section -->
+        <div class="section">
+            <h2>Technical Events</h2>
+            <div class="scroll-wrapper">
+                <button class="scroll-btn left">&#9664;</button>
+                <div class="carousel-container">
+                    <a href="codeclash.html" class="event-card"><img
+                            src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Code Clash</div>
+                    </a>
+                    <a href="botbattle.html" class="event-card"><img
+                            src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Bot Battle</div>
+                    </a>
+                    <a href="circuitmasters.html" class="event-card"><img
+                            src="https://images.unsplash.com/photo-1551269901-5c5e14c25df7?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Circuit Masters</div>
+                    </a>
+                    <a href="webwonders.html" class="event-card"><img
+                            src="https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Web Wonders</div>
+                    </a>
+                    <a href="aiarena.html" class="event-card"><img
+                            src="https://images.unsplash.com/photo-1677442135136-760c813a743d?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">AI Arena</div>
+                    </a>
+                    <a href="quantumquizzers.html" class="event-card"><img
+                            src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Quantum Quizzers</div>
+                    </a>
+                    <a href="hacksurge.html" class="event-card"><img
+                            src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Hack Surge</div>
+                    </a>
+                    <a href="debugdual.html" class="event-card"><img
+                            src="https://images.unsplash.com/photo-1581093057305-25f0a6f9ee1f?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Debug Duel</div>
+                    </a>
+                    <a href="acceptquest.html" class="event-card"><img
+                            src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">App Quest</div>
+                    </a>
+                </div>
+                <button class="scroll-btn right">&#9654;</button>
+            </div>
+        </div>
 
-  <div class="event-section">
-    <h2 data-aos="flip-up">Food Stalls</h2>
-    <button class="scroll-button scroll-left" onclick="scrollCarousel('food', 'left')">&#9664;</button>
-    <button class="scroll-button scroll-right" onclick="scrollCarousel('food', 'right')">&#9654;</button>
-    <div class="event-carousel" id="food"></div>
-  </div>
+        <!-- Non-Technical Events Section -->
+        <div class="section">
+            <h2>Non-Technical Events</h2>
+            <div class="scroll-wrapper">
+                <button class="scroll-btn left">&#9664;</button>
+                <div class="carousel-container">
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Treasure Trials</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Open Mic</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Art Attack</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Photography Contest</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Cosplay Show</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Dance Off</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Drama Fest</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Slam Poetry</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Fashion Parade</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Talent Twist</div>
+                    </a>
+                </div>
+                <button class="scroll-btn right">&#9654;</button>
+            </div>
+        </div>
 
-  <div class="event-section">
-    <h2 data-aos="flip-up">Pro Shows</h2>
-    <button class="scroll-button scroll-left" onclick="scrollCarousel('proshow', 'left')">&#9664;</button>
-    <button class="scroll-button scroll-right" onclick="scrollCarousel('proshow', 'right')">&#9654;</button>
-    <div class="event-carousel" id="proshow"></div>
-  </div>
+        <!-- Food Stalls Section -->
+        <div class="section">
+            <h2>Food Stalls</h2>
+            <div class="scroll-wrapper">
+                <button class="scroll-btn left">&#9664;</button>
+                <div class="carousel-container">
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Spice Route</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Burger Blast</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Sweet Tooth</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Tandoori Trail</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Chaat Corner</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Pasta Place</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Ice Cream Island</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Mocktail Magic</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Wrap Station</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Street Eats</div>
+                    </a>
+                </div>
+                <button class="scroll-btn right">&#9654;</button>
+            </div>
+        </div>
 
-  <div class="event-section">
-    <h2 data-aos="flip-up">Games Arena</h2>
-    <button class="scroll-button scroll-left" onclick="scrollCarousel('games', 'left')">&#9664;</button>
-    <button class="scroll-button scroll-right" onclick="scrollCarousel('games', 'right')">&#9654;</button>
-    <div class="event-carousel" id="games"></div>
-  </div>
+        <!-- Games Arena Section -->
+        <div class="section">
+            <h2>Games Arena</h2>
+            <div class="scroll-wrapper">
+                <button class="scroll-btn left">&#9664;</button>
+                <div class="carousel-container">
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1551103782-8ab07afd45c1?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">LAN Party</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">VR Challenge</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Console Clash</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Mobile Madness</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1551103782-8ab07afd45c1?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Arcade Blitz</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Escape Room</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1589998059171-988d887df646?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Board Brawl</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1584735428934-9f8ce8ffbf97?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Trivia Time</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Paintball Zone</div>
+                    </a>
+                    <a href="#" class="event-card"><img 
+                        src="https://images.unsplash.com/photo-1584735428934-9f8ce8ffbf97?auto=format&fit=crop&w=600&q=80" />
+                        <div class="event-title">Carnival Chaos</div>
+                    </a>
+                </div>
+                <button class="scroll-btn right">&#9654;</button>
+            </div>
+        </div>
+    </div>
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init();
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function () {
+            const searchValue = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.event-card');
 
-    function scrollCarousel(containerId, direction) {
-      const container = document.getElementById(containerId);
-      const scrollAmount = 270;
-      container.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-
-    function filterEvents() {
-      const term = document.getElementById('searchBar').value.toLowerCase();
-      document.querySelectorAll('.event-card').forEach(card => {
-        const name = card.getAttribute('data-name');
-        card.style.display = name.includes(term) ? 'block' : 'none';
-      });
-    }
-
-    const eventData = {
-      technical: [
-        { name: "Code Clash", img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Bot Battle", img: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Circuit Masters", img: "https://images.unsplash.com/photo-1551269901-5c5e14c25df7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "AI Arena", img: "https://images.unsplash.com/photo-1677442135136-760c813a743d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Hack Surge", img: "https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Quantum Quizzers", img: "https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Tech Trek", img: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Debug Duel", img: "https://images.unsplash.com/photo-1581093057305-25f0a6f9ee1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Web Wonders", img: "https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "App Quest", img: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" }
-      ],
-      nontech: [
-        { name: "Treasure Trials", img: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Minute to Win It", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Whacky Games", img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Brain Buzz", img: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Escape Room", img: "escaperoom.jpeg" },
-        { name: "Ink Wars", img: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Sketch Masters", img: "https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Meme Showdown", img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Talent Hunt", img: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Drama Dazzle", img: "https://s.studiobinder.com/wp-content/uploads/2020/01/What-is-Drama-Definition-Examples-and-Characteristics-Featured.jpg" }
-      ],
-      food: [
-        { name: "Spice Junction", img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Sugar Rush", img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Tandoori Trail", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Pizza Point", img: "https://images.unsplash.com/photo-1593504049359-74330189a345?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Burger Barn", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Wrap & Roll", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Juice Hub", img: "https://images.unsplash.com/photo-1551269901-5c5e14c25df7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Café Mocha", img: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Noodle Nirvana", img: "https://images.unsplash.com/photo-1552611052-33e04de081de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Dessert Den", img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" }
-      ],
-      proshow: [
-        { name: "Rock Rhapsody", img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Comedy Carnival", img: "https://images.unsplash.com/photo-1549576490-b0b4831ef60a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "DJ Frenzy", img: "https://images.unsplash.com/photo-1501612780327-45045538702b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Indie Echoes", img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Sufi Night", img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Dance Mania", img: "https://images.unsplash.com/photo-1547153760-18fc86324498?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Retro Groove", img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Fusion Fiesta", img: "https://images.unsplash.com/photo-1501612780327-45045538702b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Rhythm Riot", img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Illusion Hour", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" }
-      ],
-      games: [
-        { name: "Arcade Blasters", img: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "FIFA Clash", img: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "BattleZone", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Chess Champs", img: "https://images.unsplash.com/photo-1543092587-d8b8feaf3a9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "LAN Lords", img: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Mobile Mayhem", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Valor Showdown", img: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Smash Arena", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "Cosplay Battle", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" },
-        { name: "VR Voyage", img: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" }
-      ]
-    };
-
-    function populateEvents() {
-      for (const category in eventData) {
-        const container = document.getElementById(category);
-        eventData[category].forEach(event => {
-          const card = document.createElement('div');
-          card.className = 'event-card';
-          card.setAttribute('data-name', event.name.toLowerCase());
-          card.innerHTML = `
-            <img src="${event.img}" alt="${event.name}">
-            <h3>${event.name}</h3>
-            <button onclick="alert('More info about ${event.name}')">View Details</button>
-          `;
-          container.appendChild(card);
+            cards.forEach(card => {
+                const title = card.querySelector('.event-title').textContent.toLowerCase();
+                card.style.display = title.includes(searchValue) ? 'block' : 'none';
+            });
         });
-      }
-    }
 
-    populateEvents();
-  </script>
+        // Scroll buttons functionality
+        const scrollWrappers = document.querySelectorAll('.scroll-wrapper');
+
+        scrollWrappers.forEach(wrapper => {
+            const container = wrapper.querySelector('.carousel-container');
+            const btnLeft = wrapper.querySelector('.scroll-btn.left');
+            const btnRight = wrapper.querySelector('.scroll-btn.right');
+
+            btnLeft.addEventListener('click', () => {
+                container.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+
+            btnRight.addEventListener('click', () => {
+                container.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+        });
+    </script>
 </body>
+
 </html>
